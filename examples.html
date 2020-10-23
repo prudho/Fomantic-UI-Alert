@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+
+    <title>Fomantic-UI Alert</title>
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/fomantic-ui@2.8.7/dist/semantic.min.css">
+
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/fomantic-ui@2.8.7/dist/semantic.min.js"></script>
+    <script src="./src/fui-alert.js"></script>
+
+  </head>
+  <body>
+
+    <button id="basic" class="ui primary button">Basic Alert</button>
+
+    <button id="titletext" class="ui primary button">A title with a text under</button>
+
+    <button id="confirm" class="ui primary button">A confirm dialog</button>
+
+    <button id="html" class="ui primary button">Some HTML content</button>
+
+    <button id="input" class="ui primary button">An input</button>
+
+    <style>
+      body {
+        padding: 1rem;
+      }
+    </style>
+
+    <script type="text/javascript">
+      $(document).ready(function() {
+        $('#basic').click(function() {
+          fuialert.fire({
+            title: 'Any fool can use a computer',
+            size: 'mini',
+            icon: 'exclamation',
+          });
+        });
+
+        $('#titletext').click(function() {
+          fuialert.fire({
+            title: 'The Internet?',
+            text: 'That thing is still around?',
+            size: 'large'
+          });
+        });
+
+        $('#confirm').click(function() {
+          fuialert.fire({
+            title: 'Are you sure?',
+            text: `You won't be able to revert this!`,
+            icon: 'exclamation',
+            showCancelButton: true,
+            cancelButtonIcon: 'times',
+            confirmButtonText: 'Yes, delete it!',
+            confirmButtonColor: 'red',
+            confirmButtonIcon: 'check',
+            position: 'top',
+            transition: 'vertical flip'
+          }).then((result) => {
+            console.log('retour', result);
+
+            if (result.value) {
+              fuialert.fire({
+                title: 'Your file has been deleted!',
+                size: 'mini',
+                icon: 'check',
+              });
+            } else {
+              fuialert.fire({
+                title: 'Your file has been preserved!',
+                size: 'mini',
+                icon: 'times'
+              });
+            }
+          });
+        });
+
+        $('#html').click(function() {
+          fuialert.fire({
+            title: '<u>Hello, world !</u>',
+            html: `<a href="https://fomantic-ui.com/">Fomantic UI</a> is the <b>best framework</b>, <i>isn't it ?</i>`
+          });
+        });
+
+        $('#input').click(function() {
+          fuialert.fire({
+            size: 'mini',
+            title: 'Please enter something:',
+            input: 'text'
+          }).then((result) => {
+            fuialert.fire({
+              title: 'Input value result',
+              html: `You have entered: <code>${result.value}</code>`,
+              size: 'mini'
+            });
+          });
+        });
+      });
+    </script>
+
+  </body>
+</html>
